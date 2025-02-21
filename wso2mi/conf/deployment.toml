@@ -1,0 +1,28 @@
+[server]
+hostname = "MI_IP"
+# offset  = 10
+
+#[user_store]
+#type = "read_only_ldap"
+
+[keystore.primary]
+file_name = "repository/resources/security/wso2carbon.jks"
+password = "wso2carbon"
+alias = "wso2carbon"
+key_password = "wso2carbon"
+
+[truststore]
+file_name = "repository/resources/security/client-truststore.jks"
+password = "wso2carbon"
+alias = "symmetric.key.value"
+algorithm = "AES"
+
+[[internal_apis.users]]
+user.name = "USERNAME"
+user.password = "PASSWORD"
+
+[[service_catalog]]
+apim_host = "https://CONTROL_PLAIN_IP:9444"
+enable = true
+username = "USERNAME"
+password = "PASSWORD"

@@ -1,0 +1,19 @@
+version: '2.4'
+services:
+  micro-integrator:
+    build: ./dockerfiles
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "8253"]
+      interval: 10s
+      start_period: 30s
+      retries: 10
+    depends_on:
+      api-manager:
+        condition: service_healthy
+    volumes:
+      - ./conf:/home/wso2carbon/wso2-config-volume
+    ports:
+      - "8290:8290"
+      - "8253:8253"
+      - "9164:9164"
+      - "9201:9201"

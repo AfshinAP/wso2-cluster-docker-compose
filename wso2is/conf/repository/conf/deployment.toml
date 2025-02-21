@@ -1,0 +1,76 @@
+[server]
+hostname = "IS_IP"
+node_ip = "IS_IP"
+offset = 2
+base_path = "https://$ref{server.hostname}:${carbon.management.port}"
+
+[super_admin]
+username = "USERNAME"
+password = "PASSWORD"
+create_admin_account = true
+
+[user_store]
+type = "database_unique_id"
+
+[database.identity_db]
+type = "postgre"
+url = "jdbc:postgresql://POSTGRE_IP:5432/wso2is_identity_db?autoReconnect=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"
+username = "USERNAME"
+password = "PASSWORD"
+driver = "org.postgresql.Driver"
+
+[database.shared_db]
+type = "postgre"
+url = "jdbc:postgresql://POSTGRE_IP:5432/wso2is_shared_db?autoReconnect=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"
+username = "USERNAME"
+password = "PASSWORD"
+driver = "org.postgresql.Driver"
+
+[keystore.tls]
+file_name =  "wso2carbon.jks"
+type =  "JKS"
+password =  "wso2carbon"
+alias =  "wso2carbon"
+key_password =  "wso2carbon"
+
+[keystore.primary]
+file_name =  "wso2carbon.jks"
+type =  "JKS"
+password =  "wso2carbon"
+alias =  "wso2carbon"
+key_password =  "wso2carbon"
+
+[keystore.internal]
+file_name =  "wso2carbon.jks"
+type =  "JKS"
+password =  "wso2carbon"
+alias =  "wso2carbon"
+key_password =  "wso2carbon"
+
+[truststore]
+file_name="client-truststore.jks"
+password="wso2carbon"
+type="JKS"
+
+[account_recovery.endpoint.auth]
+hash= "66cd9688a2ae068244ea01e70f0e230f5623b7fa4cdecb65070a09ec06452262"
+
+[identity.auth_framework.endpoint]
+app_password= "dashboard"
+
+[oauth]
+authorize_all_scopes = true
+
+[oauth.global_rbac_scope_issuer]
+enable=true
+
+[oauth.global_scope_validators.role_based_scope_issuer]
+enable=true
+
+[[resource.access_control]]
+context="(.*)/scim2/Me"
+secure=true
+http_method="GET"
+cross_tenant=true
+permissions=[]
+scopes=[]

@@ -1,0 +1,14 @@
+version: '2.4'
+services:
+  identity-server:
+    build: ./dockerfiles
+    ports:
+      - "9765:9765"
+      - "9445:9445"
+    healthcheck:
+      test: ["CMD", "curl", "-k", "-f", "https://localhost:9443/carbon/admin/login.jsp"]
+      interval: 5s
+      timeout: 120s
+      start_period: 100s
+    volumes:
+      - ./conf:/home/wso2carbon/wso2-config-volume

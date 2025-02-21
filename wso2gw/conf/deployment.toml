@@ -1,0 +1,74 @@
+[server]
+hostname = "API_GATEWAY_IP"
+offset=3
+node_ip = "API_GATEWAY_IP"
+#discard_empty_caches = false
+server_role = "gateway-worker"
+
+[super_admin]
+username = "USERNAME"
+password = "PASSWORD"
+create_admin_account = true
+
+[user_store]
+type = "database_unique_id"
+
+[database.shared_db]
+type = "postgre"
+url = "jdbc:postgresql://POSTGRE_IP:5432/wso2_shared_db?autoReconnect=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"
+username = "admin"	
+password = "admin"	
+driver = "org.postgresql.Driver"
+
+[keystore.tls]
+file_name =  "wso2carbon.jks"
+type =  "JKS"
+password =  "wso2carbon"
+alias =  "wso2carbon"
+key_password =  "wso2carbon"
+
+#[keystore.listener_profile]
+#bind_address = "0.0.0.0"
+
+[keystore.primary]
+file_name =  "wso2carbon.jks"
+type =  "JKS"
+password =  "wso2carbon"
+alias =  "wso2carbon"
+key_password =  "wso2carbon"
+
+[keystore.internal]
+file_name =  "wso2carbon.jks"
+type =  "JKS"
+password =  "wso2carbon"
+alias =  "wso2carbon"
+key_password =  "wso2carbon"
+
+[truststore]
+file_name="client-truststore.jks"
+password="wso2carbon"
+type="JKS"
+
+# Key Manager configuration
+[apim.key_manager]
+service_url = "https://CONTROL_PLAIN_IP:9444/services/"
+
+# Traffic Manager configurations
+[apim.throttling]
+service_url = "https://CONTROL_PLAIN_IP:9444/services/"
+throttle_decision_endpoints = ["tcp://CONTROL_PLAIN_IP:5673"]
+
+[[apim.throttling.url_group]]
+traffic_manager_urls=["tcp://CONTROL_PLAIN_IP:9612"]
+traffic_manager_auth_urls=["ssl://CONTROL_PLAIN_IP:9712"]
+
+[apim.sync_runtime_artifacts.gateway]
+gateway_labels =["Default"]
+
+[[custom_message_builders]]
+content_type = "application/mrpc+json"
+class = "org.apache.synapse.commons.json.JsonStreamBuilder"
+
+[[custom_message_formatters]]
+content_type = "application/mrpc+json"
+class = "org.apache.synapse.commons.json.JsonStreamFormatter"

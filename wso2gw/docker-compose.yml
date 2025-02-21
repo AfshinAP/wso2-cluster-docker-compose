@@ -1,0 +1,23 @@
+version: '2.4'
+services:
+  api-gateway:
+    build: ./dockerfiles
+    healthcheck:
+      test: ["CMD", "nc", "-z","localhost", "9445"]
+      interval: 10s
+      start_period: 180s
+      retries: 20
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - PROFILE_NAME=gateway-worker 
+    volumes:
+      - ./conf:/home/wso2carbon/wso2-config-volume
+    ports:
+      - "9446:9446"
+      - "9766:9766"
+      - "9102:9102"
+      - "8102:8102"
+      - "8283:8283"
+      - "8246:8246"

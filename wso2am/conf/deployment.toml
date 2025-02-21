@@ -1,0 +1,85 @@
+[server]
+hostname = "CONTROL_PLAIN_IP"
+offset=1
+base_path = "${carbon.protocol}://${carbon.host}:${carbon.management.port}"
+#discard_empty_caches = false
+server_role = "control-plane"
+
+[super_admin]
+username = "USERNAME"
+password = "PASSWORD"
+create_admin_account = true
+
+[user_store]
+type = "database_unique_id"
+
+[database.apim_db]	
+type = "postgre"
+url = "jdbc:postgresql://POSTGRE_IP:5432/wso2am_db?autoReconnect=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"
+username = "admin"
+password = "admin"
+driver = "org.postgresql.Driver"
+
+[database.shared_db]
+type = "postgre"
+url = "jdbc:postgresql://POSTGRE_IP:5432/wso2_shared_db?autoReconnect=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"
+username = "admin"	
+password = "admin"	
+driver = "org.postgresql.Driver"
+
+[keystore.tls]
+file_name =  "wso2carbon.jks"
+type =  "JKS"
+password =  "wso2carbon"
+alias =  "wso2carbon"
+key_password =  "wso2carbon"
+
+#[keystore.listener_profile]
+#bind_address = "0.0.0.0"
+
+[keystore.primary]
+file_name =  "wso2carbon.jks"
+type =  "JKS"
+password =  "wso2carbon"
+alias =  "wso2carbon"
+key_password =  "wso2carbon"
+
+[keystore.internal]
+file_name =  "wso2carbon.jks"
+type =  "JKS"
+password =  "wso2carbon"
+alias =  "wso2carbon"
+key_password =  "wso2carbon"
+
+[truststore]
+file_name="client-truststore.jks"
+password="wso2carbon"
+type="JKS"
+
+[[apim.gateway.environment]]
+name = "Default"
+type = "hybrid"
+display_in_api_console = true
+description = "This is a hybrid gateway that handles both production and sandbox token traffic."
+show_as_token_endpoint_url = true
+service_url = "https://API_GATEWAY_IP:9446/services/"
+username= "${admin.username}"
+password= "${admin.password}"
+ws_endpoint = "ws://API_GATEWAY_IP:9102"
+wss_endpoint = "wss://API_GATEWAY_IP:8102"
+http_endpoint = "http://API_GATEWAY_IP:8283"
+https_endpoint = "https://API_GATEWAY_IP:8246"
+
+[apim.key_manager]
+service_url = "https://CONTROL_PLAIN_IP:9444/services/"
+
+[[event_listener]]
+id = "token_revocation"
+type = "org.wso2.carbon.identity.core.handler.AbstractIdentityHandler"
+name = "org.wso2.is.notification.ApimOauthEventInterceptor"
+order = 1
+[event_listener.properties]
+notification_endpoint = "https://CONTROL_PLAIN_IP:9444/internal/data/v1/notify"
+username = "${admin.username}"
+password = "${admin.password}"
+'header.X-WSO2-KEY-MANAGER' = "default"
