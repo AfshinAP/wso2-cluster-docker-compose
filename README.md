@@ -9,7 +9,7 @@ This repository provides a docker-coompose based approach to setting up a WSO2 c
 
 ## Architecture
 
-A high-level flow for this cluster might look like:
+A high-level flow for this cluster:
 
 - WSO2 Identity Server handles user authentication and authorization.
 - WSO2 API Manager acts as the control plane for APIs: Publisher, Developer Portal, Key Manager, etc.
